@@ -16,6 +16,12 @@ export function resolvePriceId(product: Product): string | undefined {
   return process.env[product.priceIdEnvVar];
 }
 
+/** Reverse lookup used by the webhook when a transaction has no customData
+ * (e.g. an older client, or a purchase made another way). */
+export function findIconPackByPriceId(priceId: string): Product | undefined {
+  return iconPacks.find((product) => resolvePriceId(product) === priceId);
+}
+
 export const iconPacks: Product[] = [
   {
     id: "icons-essencial",
@@ -54,33 +60,5 @@ export const iconPacks: Product[] = [
     ],
     type: "one_time",
     priceIdEnvVar: "PADDLE_PRICE_ICONS_COMPLETO",
-  },
-];
-
-export const saasPlans: Product[] = [
-  {
-    id: "saas-mensal",
-    name: "Plano Mensal",
-    description: "Acesso completo à plataforma, sem compromisso.",
-    price: "€15/mês",
-    features: ["Acesso total à aplicação", "Suporte por email", "Cancele quando quiser"],
-    type: "subscription",
-    interval: "month",
-    priceIdEnvVar: "PADDLE_PRICE_SAAS_MENSAL",
-  },
-  {
-    id: "saas-anual",
-    name: "Plano Anual",
-    description: "O mesmo acesso, com 2 meses grátis.",
-    price: "€150/ano",
-    features: [
-      "Acesso total à aplicação",
-      "Suporte prioritário",
-      "2 meses grátis face ao mensal",
-    ],
-    type: "subscription",
-    interval: "year",
-    priceIdEnvVar: "PADDLE_PRICE_SAAS_ANUAL",
-    highlighted: true,
   },
 ];

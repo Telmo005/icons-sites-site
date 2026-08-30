@@ -6,7 +6,7 @@ import { getSupabasePublishableKey, getSupabaseUrl } from "@/lib/supabase/env";
 // Server Components read the session — they can't write cookies themselves,
 // so without this, token refreshes are silently dropped and users get
 // logged out unpredictably.
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(getSupabaseUrl(), getSupabasePublishableKey(), {

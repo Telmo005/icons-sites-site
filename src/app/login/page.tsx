@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -14,10 +16,14 @@ export default function LoginPage() {
     setError(null);
     try {
       const supabase = createClient();
+      const next = new URLSearchParams(window.location.search).get("next");
+      const redirectUrl = new URL("/auth/callback", window.location.origin);
+      if (next) redirectUrl.searchParams.set("next", next);
+
       const { error: signInError } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: redirectUrl.toString(),
         },
       });
       if (signInError) throw signInError;
@@ -29,7 +35,9 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex flex-1 flex-col items-center justify-center bg-zinc-50 px-6 font-sans dark:bg-black">
+    <div className="flex flex-1 flex-col bg-zinc-50 font-sans dark:bg-black">
+      <SiteHeader />
+      <main className="flex flex-1 flex-col items-center justify-center px-6">
       <div className="w-full max-w-sm">
         <h1 className="text-2xl font-bold">Iniciar sessão</h1>
         <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
@@ -61,6 +69,8 @@ export default function LoginPage() {
           </form>
         )}
       </div>
+      </main>
+      <SiteFooter />
     </div>
   );
 }

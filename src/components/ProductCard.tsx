@@ -38,6 +38,7 @@ export function ProductCard({
         <CheckoutButton
           priceId={priceId}
           label={product.type === "subscription" ? "Subscrever" : "Comprar agora"}
+          customData={product.type === "one_time" ? { packId: product.id } : undefined}
         />
       </div>
     </div>

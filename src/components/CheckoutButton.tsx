@@ -7,10 +7,14 @@ export function CheckoutButton({
   priceId,
   label = "Comprar",
   className = "",
+  customData,
 }: {
   priceId: string | undefined;
   label?: string;
   className?: string;
+  /** Passed through to Paddle Checkout so the webhook can identify the
+   * product without guessing from the price id alone. */
+  customData?: Record<string, string>;
 }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,6 +33,7 @@ export function CheckoutButton({
       const paddle = await getPaddle();
       paddle?.Checkout.open({
         items: [{ priceId, quantity: 1 }],
+        ...(customData ? { customData } : {}),
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Falha ao abrir o checkout.");

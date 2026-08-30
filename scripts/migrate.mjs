@@ -65,8 +65,26 @@ create table if not exists public.subscriptions (
 create index if not exists subscriptions_customer_id_idx
   on public.subscriptions(customer_id);
 
+create table if not exists public.orders (
+  order_id text primary key,
+  customer_id text not null references public.customers(customer_id),
+  email text not null,
+  price_id text not null,
+  product_id text not null,
+  pack_slug text,
+  currency_code text,
+  total_amount text,
+  status text not null default 'completed',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create index if not exists orders_customer_id_idx
+  on public.orders(customer_id);
+
 alter table public.customers enable row level security;
 alter table public.subscriptions enable row level security;
+alter table public.orders enable row level security;
 `;
 
 const client = new pg.Client({
