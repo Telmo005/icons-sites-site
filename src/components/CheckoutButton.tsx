@@ -1,0 +1,56 @@
+"use client";
+
+import { useState } from "react";
+import { getPaddle } from "@/lib/paddle-client";
+
+export function CheckoutButton({
+  priceId,
+  label = "Comprar",
+  className = "",
+}: {
+  priceId: string | undefined;
+  label?: string;
+  className?: string;
+}) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleClick() {
+    if (!priceId) {
+      alert(
+        "Este produto ainda não tem um Price ID do Paddle configurado. Defina a variável de ambiente correspondente."
+      );
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    try {
+      const paddle = await getPaddle();
+      paddle?.Checkout.open({
+        items: [{ priceId, quantity: 1 }],
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Falha ao abrir o checkout.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={handleClick}
+        disabled={loading}
+        className={
+          className ||
+          "w-full rounded-full bg-foreground px-5 py-3 text-center text-sm font-medium text-background transition-colors hover:bg-[#383838] disabled:opacity-50 dark:hover:bg-[#ccc]"
+        }
+      >
+        {loading ? "A abrir checkout..." : label}
+      </button>
+      {error && <p className="mt-2 text-xs text-red-600 dark:text-red-400">{error}</p>}
+    </div>
+  );
+}
