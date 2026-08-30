@@ -1,5 +1,6 @@
 import "server-only";
 import { Resend } from "resend";
+import { SUPPORT_EMAIL } from "@/lib/site-config";
 
 let resend: Resend | undefined;
 
@@ -36,4 +37,39 @@ export async function sendIconPackPurchaseEmail(input: {
       em "A minha conta".</p>
     `,
   });
+}
+
+export async function sendContactMessage(input: {
+  name: string;
+  fromEmail: string;
+  message: string;
+}): Promise<void> {
+  // NOTE: Resend's shared "onboarding@resend.dev" sender can only deliver to
+  // the Resend account's own verified email until a custom domain is
+  // verified (resend.com/domains) — NOT to SUPPORT_EMAIL if it differs, and
+  // NOT to arbitrary customer addresses (this also currently blocks real
+  // purchase confirmation emails in sendIconPackPurchaseEmail above). Switch
+  // this back to SUPPORT_EMAIL once a domain is verified.
+  const notificationRecipient = process.env.RESEND_NOTIFICATION_EMAIL || SUPPORT_EMAIL;
+
+  await getResend().emails.send({
+    from: getFromAddress(),
+    to: notificationRecipient,
+    replyTo: input.fromEmail,
+    subject: `Novo contacto de ${input.name}`,
+    html: `
+      <p><strong>Nome:</strong> ${escapeHtml(input.name)}</p>
+      <p><strong>Email:</strong> ${escapeHtml(input.fromEmail)}</p>
+      <p><strong>Mensagem:</strong></p>
+      <p>${escapeHtml(input.message).replace(/\n/g, "<br/>")}</p>
+    `,
+  });
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }

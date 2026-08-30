@@ -1,10 +1,11 @@
 import { LegalPage } from "@/components/LegalPage";
+import { SUPPORT_EMAIL } from "@/lib/site-config";
 
 export const metadata = { title: "Política de Privacidade — IconStack" };
 
 export default function PrivacidadePage() {
   return (
-    <LegalPage title="Política de Privacidade" updatedAt="[preencher antes de publicar]">
+    <LegalPage title="Política de Privacidade" updatedAt="31 de agosto de 2026">
       <p>
         Esta política explica que dados pessoais recolhemos, para quê, e como
         os protegemos.
@@ -57,11 +58,21 @@ export default function PrivacidadePage() {
       <h2>5. Os seus direitos</h2>
       <p>
         Pode pedir acesso, correção ou eliminação dos seus dados pessoais a
-        qualquer momento, contactando-nos em [inserir email de suporte].
+        qualquer momento, contactando-nos em{" "}
+        <a href={`mailto:${SUPPORT_EMAIL}`} className="text-accent underline">
+          {SUPPORT_EMAIL}
+        </a>
+        .
       </p>
 
       <h2>6. Contacto</h2>
-      <p>Para questões sobre privacidade: [inserir email de suporte].</p>
+      <p>
+        Para questões sobre privacidade:{" "}
+        <a href={`mailto:${SUPPORT_EMAIL}`} className="text-accent underline">
+          {SUPPORT_EMAIL}
+        </a>
+        .
+      </p>
     </LegalPage>
   );
 }

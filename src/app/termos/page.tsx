@@ -1,10 +1,11 @@
 import { LegalPage } from "@/components/LegalPage";
+import { SUPPORT_EMAIL } from "@/lib/site-config";
 
 export const metadata = { title: "Termos de Serviço — IconStack" };
 
 export default function TermosPage() {
   return (
-    <LegalPage title="Termos de Serviço" updatedAt="[preencher antes de publicar]">
+    <LegalPage title="Termos de Serviço" updatedAt="31 de agosto de 2026">
       <p>
         Estes Termos de Serviço regem o uso do site IconStack (&ldquo;nós&rdquo;, &ldquo;o
         Site&rdquo;) e a compra dos produtos digitais aqui disponibilizados:
@@ -76,7 +77,13 @@ export default function TermosPage() {
       </p>
 
       <h2>7. Contacto</h2>
-      <p>Para questões sobre estes termos: [inserir email de suporte].</p>
+      <p>
+        Para questões sobre estes termos:{" "}
+        <a href={`mailto:${SUPPORT_EMAIL}`} className="text-accent underline">
+          {SUPPORT_EMAIL}
+        </a>
+        .
+      </p>
     </LegalPage>
   );
 }

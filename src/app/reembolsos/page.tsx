@@ -1,10 +1,11 @@
 import { LegalPage } from "@/components/LegalPage";
+import { SUPPORT_EMAIL } from "@/lib/site-config";
 
 export const metadata = { title: "Política de Reembolso — IconStack" };
 
 export default function ReembolsosPage() {
   return (
-    <LegalPage title="Política de Reembolso" updatedAt="[preencher antes de publicar]">
+    <LegalPage title="Política de Reembolso" updatedAt="31 de agosto de 2026">
       <p>
         Todas as compras neste Site são processadas pela Paddle.com, que atua
         como Merchant of Record e gere diretamente os pedidos de reembolso,
@@ -36,7 +37,11 @@ export default function ReembolsosPage() {
       <p>
         Contacte o suporte da Paddle diretamente através do link presente no
         seu recibo/fatura (enviado por email após a compra), ou contacte-nos
-        em [inserir email de suporte] e encaminhamos o seu pedido.
+        em{" "}
+        <a href={`mailto:${SUPPORT_EMAIL}`} className="text-accent underline">
+          {SUPPORT_EMAIL}
+        </a>{" "}
+        e encaminhamos o seu pedido.
       </p>
 
       <h2>4. Prazos</h2>

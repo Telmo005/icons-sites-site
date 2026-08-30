@@ -24,6 +24,9 @@ export function SiteFooter() {
           <Link href="/reembolsos" className="transition-colors hover:text-foreground">
             Reembolsos
           </Link>
+          <Link href="/contacto" className="transition-colors hover:text-foreground">
+            Contacto
+          </Link>
         </nav>
       </div>
     </footer>
