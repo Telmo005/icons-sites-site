@@ -27,21 +27,19 @@ export default async function AccountPage() {
   const hasActiveSubscription = subscriptions.some((s) => hasActiveAccess(s.status));
 
   return (
-    <div className="flex flex-1 flex-col bg-zinc-50 font-sans dark:bg-black">
+    <div className="flex flex-1 flex-col font-sans">
       <SiteHeader userEmail={user.email} />
       <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-16">
         <h1 className="text-3xl font-bold">A minha conta</h1>
-        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{user.email}</p>
+        <p className="mt-1 text-sm text-muted">{user.email}</p>
 
-        <div className="mt-10 rounded-2xl border border-black/10 p-6 dark:border-white/15">
+        <div className="mt-10 rounded-2xl border border-border bg-surface p-6">
           {!customer || subscriptions.length === 0 ? (
             <>
-              <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                Ainda não tem nenhuma subscrição.
-              </p>
+              <p className="text-sm text-muted">Ainda não tem nenhuma subscrição.</p>
               <Link
                 href="/pricing"
-                className="mt-4 inline-block text-sm font-medium underline"
+                className="mt-4 inline-block text-sm font-medium text-accent underline"
               >
                 Ver planos
               </Link>
@@ -49,7 +47,7 @@ export default async function AccountPage() {
           ) : (
             <>
               <h2 className="text-lg font-semibold">Subscrição</h2>
-              <ul className="mt-3 flex flex-col gap-1 text-sm text-zinc-600 dark:text-zinc-400">
+              <ul className="mt-3 flex flex-col gap-1 text-sm text-muted">
                 {subscriptions.map((s) => (
                   <li key={s.subscription_id}>Estado: {s.status}</li>
                 ))}
@@ -59,26 +57,22 @@ export default async function AccountPage() {
                 <form action={openBillingPortal} className="mt-6">
                   <button
                     type="submit"
-                    className="rounded-full bg-foreground px-5 py-3 text-sm font-medium text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc]"
+                    className="rounded-full bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground shadow-lg shadow-accent/25 transition-transform hover:scale-105"
                   >
                     Gerir subscrição
                   </button>
                 </form>
               ) : (
-                <p className="mt-4 text-sm text-zinc-500">
-                  Sem subscrição ativa neste momento.
-                </p>
+                <p className="mt-4 text-sm text-muted">Sem subscrição ativa neste momento.</p>
               )}
             </>
           )}
         </div>
 
-        <div className="mt-6 rounded-2xl border border-black/10 p-6 dark:border-white/15">
+        <div className="mt-6 rounded-2xl border border-border bg-surface p-6">
           <h2 className="text-lg font-semibold">As minhas compras</h2>
           {orders.length === 0 ? (
-            <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
-              Ainda não comprou nenhum pacote de ícones.
-            </p>
+            <p className="mt-3 text-sm text-muted">Ainda não comprou nenhum pacote de ícones.</p>
           ) : (
             <ul className="mt-3 flex flex-col gap-3">
               {orders.map((order) => {
@@ -94,13 +88,13 @@ export default async function AccountPage() {
                         <input type="hidden" name="orderId" value={order.order_id} />
                         <button
                           type="submit"
-                          className="rounded-full border border-black/10 px-4 py-2 text-xs font-medium hover:bg-black/5 dark:border-white/15 dark:hover:bg-white/10"
+                          className="rounded-full border border-border px-4 py-2 text-xs font-semibold transition-colors hover:bg-border/40"
                         >
                           Descarregar
                         </button>
                       </form>
                     ) : (
-                      <span className="text-xs text-zinc-500">Em reconciliação</span>
+                      <span className="text-xs text-muted">Em reconciliação</span>
                     )}
                   </li>
                 );

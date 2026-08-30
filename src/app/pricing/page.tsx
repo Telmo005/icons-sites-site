@@ -21,14 +21,14 @@ export default async function PricingPage() {
   const customerEmail = await getSignedInUserEmail();
 
   return (
-    <div className="flex flex-1 flex-col bg-zinc-50 font-sans dark:bg-black">
+    <div className="flex flex-1 flex-col font-sans">
       <SiteHeader userEmail={customerEmail} />
-      <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-16">
+      <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-16 sm:py-24">
         <section className="text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Escolha o seu plano
+            Escolha o seu <span className="text-accent">plano</span>
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-zinc-600 dark:text-zinc-400">
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-muted">
             Preços adaptados à sua localização. Cancele quando quiser.
           </p>
         </section>

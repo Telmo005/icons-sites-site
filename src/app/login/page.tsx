@@ -35,40 +35,40 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex flex-1 flex-col bg-zinc-50 font-sans dark:bg-black">
+    <div className="flex flex-1 flex-col font-sans">
       <SiteHeader />
       <main className="flex flex-1 flex-col items-center justify-center px-6">
-      <div className="w-full max-w-sm">
-        <h1 className="text-2xl font-bold">Iniciar sessão</h1>
-        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-          Enviamos-lhe um link de acesso por email — sem palavra-passe.
-        </p>
-
-        {status === "sent" ? (
-          <p className="mt-6 rounded-lg border border-black/10 bg-white p-4 text-sm dark:border-white/15 dark:bg-zinc-900">
-            Verifique o seu email ({email}) e clique no link para entrar.
+        <div className="w-full max-w-sm">
+          <h1 className="text-2xl font-bold">Iniciar sessão</h1>
+          <p className="mt-2 text-sm text-muted">
+            Enviamos-lhe um link de acesso por email — sem palavra-passe.
           </p>
-        ) : (
-          <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3">
-            <input
-              type="email"
-              required
-              placeholder="voce@exemplo.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="rounded-lg border border-black/10 bg-white px-4 py-3 text-sm dark:border-white/15 dark:bg-zinc-900"
-            />
-            <button
-              type="submit"
-              disabled={status === "sending"}
-              className="rounded-full bg-foreground px-5 py-3 text-sm font-medium text-background transition-colors hover:bg-[#383838] disabled:opacity-50 dark:hover:bg-[#ccc]"
-            >
-              {status === "sending" ? "A enviar..." : "Enviar link de acesso"}
-            </button>
-            {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
-          </form>
-        )}
-      </div>
+
+          {status === "sent" ? (
+            <p className="mt-6 rounded-lg border border-border bg-surface p-4 text-sm">
+              Verifique o seu email ({email}) e clique no link para entrar.
+            </p>
+          ) : (
+            <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3">
+              <input
+                type="email"
+                required
+                placeholder="voce@exemplo.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="rounded-lg border border-border bg-surface px-4 py-3 text-sm focus:border-accent focus:outline-none"
+              />
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="rounded-full bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground shadow-lg shadow-accent/25 transition-transform hover:scale-105 disabled:opacity-50"
+              >
+                {status === "sending" ? "A enviar..." : "Enviar link de acesso"}
+              </button>
+              {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
+            </form>
+          )}
+        </div>
       </main>
       <SiteFooter />
     </div>

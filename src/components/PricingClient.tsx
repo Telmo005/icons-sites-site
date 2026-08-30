@@ -92,7 +92,7 @@ export function PricingClient({
       )}
 
       <div className="flex items-center justify-center gap-3">
-        <span className={interval === "month" ? "font-semibold" : "text-zinc-500"}>
+        <span className={interval === "month" ? "font-semibold text-accent" : "text-muted"}>
           Mensal
         </span>
         <button
@@ -100,15 +100,15 @@ export function PricingClient({
           role="switch"
           aria-checked={interval === "year"}
           onClick={() => setBillingInterval(interval === "month" ? "year" : "month")}
-          className="relative h-7 w-12 rounded-full bg-zinc-300 transition-colors dark:bg-zinc-700"
+          className="relative h-7 w-12 rounded-full bg-border transition-colors"
         >
           <span
-            className={`absolute top-1 h-5 w-5 rounded-full bg-white shadow transition-transform ${
+            className={`absolute top-1 h-5 w-5 rounded-full bg-accent shadow transition-transform ${
               interval === "year" ? "translate-x-6" : "translate-x-1"
             }`}
           />
         </button>
-        <span className={interval === "year" ? "font-semibold" : "text-zinc-500"}>
+        <span className={interval === "year" ? "font-semibold text-accent" : "text-muted"}>
           Anual
         </span>
       </div>
@@ -117,41 +117,36 @@ export function PricingClient({
         {tiers.map((tier) => {
           const priceId = tier.priceId[interval];
           const total = totals[priceId];
+          const highlighted = tier.name === "Pro";
 
           return (
             <div
               key={tier.name}
-              className={`flex flex-col rounded-2xl border p-6 ${
-                tier.name === "Pro"
-                  ? "border-foreground shadow-lg"
-                  : "border-black/10 dark:border-white/15"
+              className={`flex flex-col rounded-2xl border bg-surface p-6 shadow-sm transition-shadow hover:shadow-lg ${
+                highlighted ? "border-accent shadow-accent/10 sm:-translate-y-2" : "border-border"
               }`}
             >
-              {tier.name === "Pro" && (
-                <span className="mb-3 w-fit rounded-full bg-foreground px-3 py-1 text-xs font-medium text-background">
+              {highlighted && (
+                <span className="mb-3 w-fit rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
                   Mais popular
                 </span>
               )}
               <h3 className="text-lg font-semibold">{tier.name}</h3>
-              <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-                {tier.description}
-              </p>
+              <p className="mt-1 text-sm text-muted">{tier.description}</p>
               <p className="mt-4 text-3xl font-bold">
-                {loadingPrices ? (
-                  <span className="text-zinc-400">…</span>
-                ) : (
-                  total ?? "—"
-                )}
+                {loadingPrices ? <span className="text-muted">…</span> : (total ?? "—")}
                 {total && (
-                  <span className="text-base font-normal text-zinc-500">
+                  <span className="text-base font-normal text-muted">
                     /{interval === "month" ? "mês" : "ano"}
                   </span>
                 )}
               </p>
-              <ul className="mt-4 flex flex-1 flex-col gap-2 text-sm text-zinc-600 dark:text-zinc-400">
+              <ul className="mt-4 flex flex-1 flex-col gap-2 text-sm text-muted">
                 {tier.features.map((feature) => (
                   <li key={feature} className="flex items-center gap-2">
-                    <span aria-hidden>✓</span>
+                    <span aria-hidden className="text-accent">
+                      ✓
+                    </span>
                     {feature}
                   </li>
                 ))}
@@ -160,7 +155,11 @@ export function PricingClient({
                 type="button"
                 onClick={() => handleSubscribe(tier)}
                 disabled={pendingTier === tier.name}
-                className="mt-6 w-full rounded-full bg-foreground px-5 py-3 text-center text-sm font-medium text-background transition-colors hover:bg-[#383838] disabled:opacity-50 dark:hover:bg-[#ccc]"
+                className={`mt-6 w-full rounded-full px-5 py-3 text-center text-sm font-semibold transition-transform hover:scale-105 disabled:opacity-50 ${
+                  highlighted
+                    ? "bg-accent text-accent-foreground shadow-lg shadow-accent/25"
+                    : "bg-foreground text-background"
+                }`}
               >
                 {pendingTier === tier.name ? "A abrir checkout..." : "Subscrever"}
               </button>
