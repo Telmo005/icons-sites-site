@@ -4,7 +4,10 @@ import { SUPPORT_EMAIL } from "@/lib/site-config";
 import { getSignedInUserEmail } from "@/lib/auth";
 import { submitContact } from "./actions";
 
-export const metadata = { title: "Contacto — IconStack" };
+export const metadata = {
+  title: "Contacto",
+  description: "Fale connosco sobre pacotes de ícones, planos SaaS, ou qualquer outra questão.",
+};
 
 export default async function ContactoPage({
   searchParams,

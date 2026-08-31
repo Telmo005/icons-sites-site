@@ -1,7 +1,7 @@
 import { LegalPage } from "@/components/LegalPage";
 import { SUPPORT_EMAIL } from "@/lib/site-config";
 
-export const metadata = { title: "Política de Reembolso — IconStack" };
+export const metadata = { title: "Política de Reembolso" };
 
 export default function ReembolsosPage() {
   return (

@@ -4,7 +4,10 @@ import { IconsCatalog } from "@/components/IconsCatalog";
 import { ICON_NAMES } from "@/lib/icons";
 import { getSignedInUserEmail } from "@/lib/auth";
 
-export const metadata = { title: "Catálogo de ícones — IconStack" };
+export const metadata = {
+  title: "Catálogo de ícones",
+  description: "Pesquise e filtre centenas de ícones vetoriais por nome ou categoria.",
+};
 
 export default async function IconesPage({
   searchParams,

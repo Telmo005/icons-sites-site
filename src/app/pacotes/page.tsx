@@ -4,7 +4,10 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { getSignedInUserEmail } from "@/lib/auth";
 
-export const metadata = { title: "Pacotes de ícones — IconStack" };
+export const metadata = {
+  title: "Pacotes de ícones",
+  description: "Compre um pacote de ícones vetoriais — pagamento único, download imediato.",
+};
 
 export default async function PacotesPage() {
   const userEmail = await getSignedInUserEmail();

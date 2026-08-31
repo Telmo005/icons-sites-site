@@ -7,6 +7,8 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { IconCustomizer } from "@/components/IconCustomizer";
 
+export const metadata = { robots: { index: false, follow: false } };
+
 export default async function AppPage() {
   const supabase = await createClient();
   const {

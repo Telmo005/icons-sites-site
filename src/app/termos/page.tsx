@@ -1,7 +1,7 @@
 import { LegalPage } from "@/components/LegalPage";
 import { LEGAL_ENTITY, SUPPORT_EMAIL } from "@/lib/site-config";
 
-export const metadata = { title: "Termos de Serviço — IconStack" };
+export const metadata = { title: "Termos de Serviço" };
 
 export default function TermosPage() {
   return (

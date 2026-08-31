@@ -5,6 +5,11 @@ import { PricingClient } from "@/components/PricingClient";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 
+export const metadata = {
+  title: "Planos",
+  description: "Starter, Pro e Advanced — subscrição com preços localizados por país.",
+};
+
 /** Only forward a well-formed ISO 3166-1 alpha-2 code — never an app-side
  * fallback sentinel (e.g. "OTHERS") or an absent/unknown header value. When
  * this is undefined, Paddle.PricePreview() falls back to IP geolocation. */

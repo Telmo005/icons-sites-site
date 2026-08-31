@@ -3,6 +3,8 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { getSignedInUserEmail } from "@/lib/auth";
 
+export const metadata = { robots: { index: false, follow: false } };
+
 export default async function WelcomePage({
   searchParams,
 }: {
