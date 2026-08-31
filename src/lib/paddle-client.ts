@@ -27,12 +27,38 @@ function requireEnvironment(): Environments {
   return value;
 }
 
-/** Lazily initializes a single shared Paddle.js instance for the whole app. */
+function withTimeout<T>(promise: Promise<T>, ms: number, message: string): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error(message)), ms);
+    promise.then(
+      (value) => {
+        clearTimeout(timer);
+        resolve(value);
+      },
+      (err) => {
+        clearTimeout(timer);
+        reject(err);
+      }
+    );
+  });
+}
+
+/** Lazily initializes a single shared Paddle.js instance for the whole app.
+ * A failed attempt (e.g. the script blocked by an ad-blocker, or a network
+ * timeout) does NOT get cached — the next call retries from scratch, instead
+ * of every future checkout click permanently reusing the same rejection. */
 export function getPaddle(): Promise<Paddle | undefined> {
   if (!initPromise) {
-    initPromise = initializePaddle({
-      token: requireEnv("NEXT_PUBLIC_PADDLE_CLIENT_TOKEN"),
-      environment: requireEnvironment(),
+    initPromise = withTimeout(
+      initializePaddle({
+        token: requireEnv("NEXT_PUBLIC_PADDLE_CLIENT_TOKEN"),
+        environment: requireEnvironment(),
+      }),
+      10000,
+      "O Paddle demorou demasiado tempo a responder. Verifique a sua ligação (ou um bloqueador de anúncios) e tente novamente."
+    ).catch((err) => {
+      initPromise = undefined; // allow retry on the next click
+      throw err;
     });
   }
   return initPromise;

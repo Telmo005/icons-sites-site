@@ -1,12 +1,17 @@
 @import "tailwindcss";
 
+/* Dark mode disabled site-wide: switch Tailwind's `dark:` variant to require
+   an explicit ".dark" class we never add, instead of following the OS
+   preference. Any `dark:*` utility left in the markup is now inert. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #fafafa;
+  --background: #ffffff;
   --foreground: #18181b;
   --surface: #ffffff;
   --border: rgb(0 0 0 / 0.08);
-  --muted: #52525b;
-  --accent: #7c3aed;
+  --muted: #6b7280;
+  --accent: #ea580c;
   --accent-foreground: #ffffff;
 }
 
@@ -20,18 +25,6 @@
   --color-accent-foreground: var(--accent-foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #08080a;
-    --foreground: #f4f4f5;
-    --surface: #131316;
-    --border: rgb(255 255 255 / 0.1);
-    --muted: #a1a1aa;
-    --accent: #a78bfa;
-    --accent-foreground: #18181b;
-  }
 }
 
 body {

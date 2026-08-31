@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { getPaddle } from "@/lib/paddle-client";
 
 export function CheckoutButton({
@@ -31,12 +32,19 @@ export function CheckoutButton({
     setError(null);
     try {
       const paddle = await getPaddle();
-      paddle?.Checkout.open({
+      if (!paddle) {
+        throw new Error("Não foi possível abrir o pagamento. Tente novamente ou contacte-nos.");
+      }
+      paddle.Checkout.open({
         items: [{ priceId, quantity: 1 }],
         ...(customData ? { customData } : {}),
       });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Falha ao abrir o checkout.");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Não foi possível abrir o pagamento. Tente novamente ou contacte-nos."
+      );
     } finally {
       setLoading(false);
     }
@@ -55,7 +63,15 @@ export function CheckoutButton({
       >
         {loading ? "A abrir checkout..." : label}
       </button>
-      {error && <p className="mt-2 text-xs text-red-600 dark:text-red-400">{error}</p>}
+      {error && (
+        <p className="mt-2 text-xs text-red-600 dark:text-red-400">
+          {error}{" "}
+          <Link href="/contacto" className="underline">
+            Contacte-nos
+          </Link>
+          .
+        </p>
+      )}
     </div>
   );
 }

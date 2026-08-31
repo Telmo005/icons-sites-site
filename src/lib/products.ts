@@ -9,6 +9,8 @@ export type Product = {
   /** Env var name holding the real Paddle Price ID (set after creating the price in the Paddle dashboard). */
   priceIdEnvVar: string;
   highlighted?: boolean;
+  /** Names from src/lib/icons.ts shown as a preview grid on the product card. */
+  previewIcons: string[];
 };
 
 /** Resolves a product's real Paddle Price ID from its env var, at server-render time. */
@@ -22,6 +24,39 @@ export function findIconPackByPriceId(priceId: string): Product | undefined {
   return iconPacks.find((product) => resolvePriceId(product) === priceId);
 }
 
+/** The exact icon names bundled in the Essencial pack (see scripts used to
+ * build icon-packs/icons-essencial.zip) — Pro and Completo both include the
+ * full ICON_NAMES catalog from src/lib/icons.ts. */
+export const ESSENCIAL_ICON_NAMES = [
+  "home",
+  "search",
+  "user",
+  "mail",
+  "check",
+  "close",
+  "plus",
+  "minus",
+  "edit",
+  "trash",
+  "download",
+  "star",
+  "heart",
+  "calendar",
+  "clock",
+  "folder",
+  "file",
+  "settings",
+  "bell",
+  "cart",
+];
+
+/** Which of our icon packs include a given icon, for catalog detail views. */
+export function packsIncluding(iconName: string): Product[] {
+  return iconPacks.filter(
+    (pack) => pack.id === "icons-essencial" ? ESSENCIAL_ICON_NAMES.includes(iconName) : true
+  );
+}
+
 export const iconPacks: Product[] = [
   {
     id: "icons-essencial",
@@ -31,6 +66,7 @@ export const iconPacks: Product[] = [
     features: ["20 ícones SVG", "Estilo outline", "Licença uso comercial"],
     type: "one_time",
     priceIdEnvVar: "PADDLE_PRICE_ICONS_ESSENCIAL",
+    previewIcons: ["home", "search", "heart", "star", "mail", "calendar", "folder", "settings"],
   },
   {
     id: "icons-pro",
@@ -45,6 +81,7 @@ export const iconPacks: Product[] = [
     type: "one_time",
     priceIdEnvVar: "PADDLE_PRICE_ICONS_PRO",
     highlighted: true,
+    previewIcons: ["home", "search", "cart", "credit-card", "chart", "camera", "music", "share"],
   },
   {
     id: "icons-completo",
@@ -59,5 +96,6 @@ export const iconPacks: Product[] = [
     ],
     type: "one_time",
     priceIdEnvVar: "PADDLE_PRICE_ICONS_COMPLETO",
+    previewIcons: ["home", "search", "cart", "tag", "chart", "wifi", "video", "shield", "sun", "moon"],
   },
 ];

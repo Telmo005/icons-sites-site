@@ -36,6 +36,8 @@ const faqs = [
   },
 ];
 
+const trendingSearches = ["coração", "carrinho", "casa", "definições", "utilizador", "seta"];
+
 export default async function Home() {
   const userEmail = await getSignedInUserEmail();
 
@@ -43,40 +45,54 @@ export default async function Home() {
     <div className="flex flex-1 flex-col font-sans">
       <SiteHeader userEmail={userEmail} />
 
-      <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-16 sm:py-24">
-        <section className="grid items-center gap-12 sm:grid-cols-2">
-          <div>
-            <span className="inline-flex items-center rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-muted">
-              Novo · Planos SaaS Starter, Pro e Advanced
-            </span>
-            <h1 className="mt-5 text-4xl font-bold tracking-tight sm:text-5xl">
-              Ícones <span className="text-accent">premium</span>, prontos a
-              usar em minutos.
-            </h1>
-            <p className="mt-4 max-w-lg text-lg text-muted">
-              Compre pacotes de ícones vetoriais para os seus projetos, ou
-              subscreva a nossa plataforma SaaS para acesso contínuo a novas
-              funcionalidades.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href="#icones"
-                className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground shadow-lg shadow-accent/25 transition-transform hover:scale-105"
-              >
-                Ver pacotes de ícones
-              </a>
-              <Link
-                href="/pricing"
-                className="rounded-full border border-border bg-surface px-6 py-3 text-sm font-semibold transition-colors hover:bg-border/40"
-              >
-                Ver planos SaaS
-              </Link>
-            </div>
-          </div>
-          <HeroIconCluster />
-        </section>
+      <section className="border-b border-border bg-orange-50/60 px-6 py-16 text-center sm:py-20">
+        <h1 className="mx-auto max-w-2xl text-4xl font-bold tracking-tight sm:text-5xl">
+          O ícone certo para o teu projeto
+        </h1>
+        <p className="mx-auto mt-3 max-w-xl text-lg text-muted">
+          Pesquise entre o nosso catálogo de ícones vetoriais, ou subscreva
+          para acesso contínuo.
+        </p>
 
-        <section className="mt-20 grid gap-6 rounded-2xl border border-border bg-surface p-8 sm:grid-cols-4 sm:p-10">
+        <form
+          action="/icones"
+          method="get"
+          className="mx-auto mt-8 flex max-w-xl items-center rounded-full border border-border bg-surface p-1.5 shadow-sm"
+        >
+          <input
+            type="search"
+            name="q"
+            placeholder="Pesquisar ícones (ex: coração, casa, seta…)"
+            className="w-full bg-transparent px-4 py-2.5 text-sm focus:outline-none"
+          />
+          <button
+            type="submit"
+            className="shrink-0 rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-accent-foreground transition-transform hover:scale-105"
+          >
+            Pesquisar
+          </button>
+        </form>
+
+        <div className="mx-auto mt-5 flex max-w-xl flex-wrap items-center justify-center gap-2 text-sm">
+          <span className="text-muted">Populares:</span>
+          {trendingSearches.map((term) => (
+            <Link
+              key={term}
+              href={`/icones?q=${encodeURIComponent(term)}`}
+              className="rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium transition-colors hover:bg-accent/10 hover:text-accent"
+            >
+              {term}
+            </Link>
+          ))}
+        </div>
+
+        <div className="mt-10">
+          <HeroIconCluster />
+        </div>
+      </section>
+
+      <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-16 sm:py-24">
+        <section className="grid gap-6 rounded-2xl border border-border bg-surface p-8 sm:grid-cols-4 sm:p-10">
           {trustPoints.map((point) => (
             <div key={point.label}>
               <p className="text-sm font-semibold">{point.label}</p>

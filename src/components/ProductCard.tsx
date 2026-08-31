@@ -1,5 +1,6 @@
 import type { Product } from "@/lib/products";
 import { CheckoutButton } from "@/components/CheckoutButton";
+import { Icon } from "@/components/Icon";
 
 export function ProductCard({
   product,
@@ -21,6 +22,20 @@ export function ProductCard({
       )}
       <h3 className="text-lg font-semibold">{product.name}</h3>
       <p className="mt-1 text-sm text-muted">{product.description}</p>
+
+      {product.previewIcons.length > 0 && (
+        <div className="mt-4 grid grid-cols-5 gap-2 sm:grid-cols-4">
+          {product.previewIcons.map((iconName) => (
+            <div
+              key={iconName}
+              className="flex aspect-square items-center justify-center rounded-lg border border-border bg-background text-muted"
+            >
+              <Icon name={iconName} className="h-4 w-4" />
+            </div>
+          ))}
+        </div>
+      )}
+
       <p className="mt-4 text-3xl font-bold">{product.price}</p>
       <ul className="mt-4 flex flex-1 flex-col gap-2 text-sm text-muted">
         {product.features.map((feature) => (

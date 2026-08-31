@@ -11,7 +11,7 @@ export function SiteHeader({ userEmail }: { userEmail?: string }) {
           IconStack
         </Link>
         <nav className="flex items-center gap-6 text-sm font-medium text-muted">
-          <Link href="/#icones" className="transition-colors hover:text-foreground">
+          <Link href="/icones" className="transition-colors hover:text-foreground">
             Ícones
           </Link>
           <Link href="/pricing" className="transition-colors hover:text-foreground">

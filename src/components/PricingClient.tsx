@@ -6,6 +6,29 @@ import { getPaddle } from "@/lib/paddle-client";
 
 type BillingInterval = "month" | "year";
 
+// A short, common list — not exhaustive. Paddle accepts any ISO 3166-1
+// alpha-2 code; this is just a convenient picker for the common case.
+const COUNTRY_OPTIONS: { code: string; label: string }[] = [
+  { code: "PT", label: "Portugal" },
+  { code: "BR", label: "Brasil" },
+  { code: "ES", label: "Espanha" },
+  { code: "FR", label: "França" },
+  { code: "DE", label: "Alemanha" },
+  { code: "GB", label: "Reino Unido" },
+  { code: "US", label: "Estados Unidos" },
+  { code: "AO", label: "Angola" },
+  { code: "MZ", label: "Moçambique" },
+  { code: "CV", label: "Cabo Verde" },
+];
+
+function countryName(code: string): string {
+  try {
+    return new Intl.DisplayNames(["pt"], { type: "region" }).of(code) ?? code;
+  } catch {
+    return code;
+  }
+}
+
 export function PricingClient({
   tiers,
   countryCode,
@@ -20,6 +43,10 @@ export function PricingClient({
   const [loadingPrices, setLoadingPrices] = useState(true);
   const [pendingTier, setPendingTier] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [manualCountry, setManualCountry] = useState<string | null>(null);
+  const [detected, setDetected] = useState<{ country: string; currency: string } | null>(null);
+
+  const effectiveCountry = manualCountry ?? countryCode;
 
   useEffect(() => {
     let cancelled = false;
@@ -38,7 +65,7 @@ export function PricingClient({
           })),
           // Omit `address` entirely when we have no country hint — Paddle
           // then geolocates from the visitor's IP itself.
-          ...(countryCode ? { address: { countryCode } } : {}),
+          ...(effectiveCountry ? { address: { countryCode: effectiveCountry } } : {}),
         });
         if (cancelled) return;
 
@@ -47,6 +74,10 @@ export function PricingClient({
           next[lineItem.price.id] = lineItem.formattedTotals.total;
         }
         setTotals(next);
+        setDetected({
+          country: response.data.address?.countryCode ?? effectiveCountry ?? "—",
+          currency: response.data.currencyCode,
+        });
       } catch (err) {
         if (!cancelled) {
           setError(err instanceof Error ? err.message : "Falha ao carregar preços.");
@@ -60,14 +91,17 @@ export function PricingClient({
     return () => {
       cancelled = true;
     };
-  }, [interval, tiers, countryCode]);
+  }, [interval, tiers, effectiveCountry]);
 
   async function handleSubscribe(tier: Tier) {
     setPendingTier(tier.name);
     setError(null);
     try {
       const paddle = await getPaddle();
-      paddle?.Checkout.open({
+      if (!paddle) {
+        throw new Error("Não foi possível abrir o pagamento. Tente novamente ou contacte-nos.");
+      }
+      paddle.Checkout.open({
         items: [{ priceId: tier.priceId[interval], quantity: 1 }],
         ...(customerEmail ? { customer: { email: customerEmail } } : {}),
         settings: {
@@ -77,7 +111,11 @@ export function PricingClient({
         },
       });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Falha ao abrir o checkout.");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Não foi possível abrir o pagamento. Tente novamente ou contacte-nos."
+      );
     } finally {
       setPendingTier(null);
     }
@@ -112,6 +150,27 @@ export function PricingClient({
           Anual
         </span>
       </div>
+
+      {detected && (
+        <p className="mt-3 text-center text-xs text-muted">
+          Preços em {detected.currency}, para {countryName(detected.country)}.{" "}
+          <label className="cursor-pointer underline">
+            Mudar
+            <select
+              value={manualCountry ?? ""}
+              onChange={(e) => setManualCountry(e.target.value || null)}
+              className="sr-only"
+            >
+              <option value="">Detetar automaticamente</option>
+              {COUNTRY_OPTIONS.map((c) => (
+                <option key={c.code} value={c.code}>
+                  {c.label}
+                </option>
+              ))}
+            </select>
+          </label>
+        </p>
+      )}
 
       <div className="mt-10 grid gap-6 sm:grid-cols-3">
         {tiers.map((tier) => {
