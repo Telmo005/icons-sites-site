@@ -14,15 +14,9 @@ export default function ReembolsosPage() {
 
       <h2>1. Pacotes de ícones (compra única)</h2>
       <p>
-        Por serem produtos digitais entregues por download imediato,
-        geralmente não são reembolsáveis assim que o download é
-        disponibilizado — exceto nos seguintes casos:
+        Garantimos reembolso total, sem perguntas, se pedido até 14 dias
+        após a compra — mesmo que já tenha feito o download.
       </p>
-      <ul>
-        <li>Os ficheiros estão corrompidos, incompletos ou não correspondem ao anunciado.</li>
-        <li>Houve um erro técnico e o download nunca chegou a ficar disponível.</li>
-        <li>Cobrança duplicada pelo mesmo pacote.</li>
-      </ul>
 
       <h2>2. Planos SaaS (subscrição)</h2>
       <p>
