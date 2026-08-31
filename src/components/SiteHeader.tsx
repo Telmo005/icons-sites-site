@@ -14,6 +14,9 @@ export function SiteHeader({ userEmail }: { userEmail?: string }) {
           <Link href="/icones" className="transition-colors hover:text-foreground">
             Ícones
           </Link>
+          <Link href="/pacotes" className="transition-colors hover:text-foreground">
+            Pacotes
+          </Link>
           <Link href="/pricing" className="transition-colors hover:text-foreground">
             Planos
           </Link>

@@ -161,3 +161,15 @@ export const ICONS: Record<string, string> = {
 };
 
 export const ICON_NAMES = Object.keys(ICONS);
+
+/** A standalone SVG file's string content for a given icon, color and size —
+ * `currentColor` resolves correctly on its own because we set `color`
+ * directly on the root element, same as it would inherit in the browser. */
+export function buildStandaloneSvg(name: string, color: string, sizePx: number): string {
+  const shapes = ICONS[name];
+  if (!shapes) return "";
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="${sizePx}" height="${sizePx}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:${color}">
+  ${shapes}
+</svg>
+`;
+}

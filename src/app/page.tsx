@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { iconPacks, resolvePriceId } from "@/lib/products";
-import { ProductCard } from "@/components/ProductCard";
+import { iconPacks } from "@/lib/products";
+import { Icon } from "@/components/Icon";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { HeroIconCluster } from "@/components/HeroIconCluster";
@@ -104,17 +104,37 @@ export default async function Home() {
         <section id="icones" className="mt-24 scroll-mt-24">
           <h2 className="text-2xl font-semibold">Pacotes de ícones</h2>
           <p className="mt-1 text-muted">
-            Pagamento único. Download imediato após a compra.
+            Compre um pacote quando estiver pronto — download imediato, sem subscrição.
           </p>
           <div className="mt-8 grid gap-6 sm:grid-cols-3">
             {iconPacks.map((product) => (
-              <ProductCard
+              <Link
                 key={product.id}
-                product={product}
-                priceId={resolvePriceId(product)}
-              />
+                href="/pacotes"
+                className="flex flex-col rounded-2xl border border-border bg-surface p-6 shadow-sm transition-shadow hover:shadow-lg"
+              >
+                <h3 className="text-lg font-semibold">{product.name}</h3>
+                <p className="mt-1 text-sm text-muted">{product.description}</p>
+                <div className="mt-4 grid grid-cols-4 gap-2">
+                  {product.previewIcons.slice(0, 4).map((iconName) => (
+                    <div
+                      key={iconName}
+                      className="flex aspect-square items-center justify-center rounded-lg border border-border bg-background text-muted"
+                    >
+                      <Icon name={iconName} className="h-4 w-4" />
+                    </div>
+                  ))}
+                </div>
+                <span className="mt-4 text-sm font-semibold text-accent">Ver detalhes →</span>
+              </Link>
             ))}
           </div>
+          <Link
+            href="/pacotes"
+            className="mt-6 inline-block rounded-full border border-border bg-surface px-6 py-3 text-sm font-semibold transition-colors hover:bg-border/40"
+          >
+            Ver pacotes e preços
+          </Link>
         </section>
 
         <section className="relative mt-24 overflow-hidden rounded-2xl border border-border bg-surface p-10 text-center sm:p-14">

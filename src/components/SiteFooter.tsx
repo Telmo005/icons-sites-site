@@ -13,6 +13,9 @@ export function SiteFooter() {
         </div>
         <span>© {new Date().getFullYear()} IconStack. Todos os direitos reservados.</span>
         <nav className="flex flex-wrap items-center justify-center gap-4">
+          <Link href="/pacotes" className="transition-colors hover:text-foreground">
+            Pacotes
+          </Link>
           <Link href="/pricing" className="transition-colors hover:text-foreground">
             Planos
           </Link>

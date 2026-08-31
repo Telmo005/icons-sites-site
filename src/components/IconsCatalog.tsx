@@ -109,7 +109,7 @@ export function IconsCatalog({
               Incluído em: {selectedPacks.map((p) => p.name).join(", ")}
             </p>
             <Link
-              href="/#icones"
+              href="/pacotes"
               onClick={() => setSelected(null)}
               className="mt-6 inline-block rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground"
             >

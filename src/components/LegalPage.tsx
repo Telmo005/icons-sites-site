@@ -21,12 +21,6 @@ export function LegalPage({
           {LEGAL_ENTITY.name} · NUIT {LEGAL_ENTITY.taxId} · {LEGAL_ENTITY.address}
         </p>
 
-        <div className="mt-6 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200">
-          Este documento é um modelo genérico e não constitui aconselhamento
-          jurídico. Deve ser revisto por um advogado antes de o site aceitar
-          pagamentos reais.
-        </div>
-
         <div
           className="mt-8 [&_h2]:mt-8 [&_h2]:text-xl [&_h2]:font-semibold
           [&_p]:mt-3 [&_p]:text-muted
