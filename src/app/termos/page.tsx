@@ -1,5 +1,5 @@
 import { LegalPage } from "@/components/LegalPage";
-import { SUPPORT_EMAIL } from "@/lib/site-config";
+import { LEGAL_ENTITY, SUPPORT_EMAIL } from "@/lib/site-config";
 
 export const metadata = { title: "Termos de Serviço — IconStack" };
 
@@ -15,12 +15,14 @@ export default function TermosPage() {
 
       <h2>1. Quem vende e quem processa o pagamento</h2>
       <p>
-        As vendas realizadas neste Site são processadas pela{" "}
-        <strong>Paddle.com Market Limited</strong>, que atua como Merchant of
-        Record (revendedor autorizado) de todos os nossos produtos. A Paddle
-        é responsável por processar os pagamentos, cobrar e liquidar impostos
-        aplicáveis, e cumprir determinadas obrigações de proteção do
-        consumidor. Ao comprar neste Site, também aceita os{" "}
+        O Site IconStack é operado por <strong>{LEGAL_ENTITY.name}</strong>,
+        com sede em {LEGAL_ENTITY.address} ({LEGAL_ENTITY.country}), NUIT{" "}
+        {LEGAL_ENTITY.taxId}. As vendas realizadas neste Site são processadas
+        pela <strong>Paddle.com Market Limited</strong>, que atua como
+        Merchant of Record (revendedor autorizado) de todos os nossos
+        produtos. A Paddle é responsável por processar os pagamentos, cobrar
+        e liquidar impostos aplicáveis, e cumprir determinadas obrigações de
+        proteção do consumidor. Ao comprar neste Site, também aceita os{" "}
         <a
           href="https://www.paddle.com/legal/checkout-buyer-terms"
           className="underline"

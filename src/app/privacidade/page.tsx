@@ -1,5 +1,5 @@
 import { LegalPage } from "@/components/LegalPage";
-import { SUPPORT_EMAIL } from "@/lib/site-config";
+import { LEGAL_ENTITY, SUPPORT_EMAIL } from "@/lib/site-config";
 
 export const metadata = { title: "Política de Privacidade — IconStack" };
 
@@ -8,7 +8,9 @@ export default function PrivacidadePage() {
     <LegalPage title="Política de Privacidade" updatedAt="31 de agosto de 2026">
       <p>
         Esta política explica que dados pessoais recolhemos, para quê, e como
-        os protegemos.
+        os protegemos. O responsável pelo tratamento dos dados é{" "}
+        <strong>{LEGAL_ENTITY.name}</strong>, com sede em {LEGAL_ENTITY.address}{" "}
+        ({LEGAL_ENTITY.country}).
       </p>
 
       <h2>1. Que dados recolhemos</h2>

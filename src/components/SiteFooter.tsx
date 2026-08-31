@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LEGAL_ENTITY } from "@/lib/site-config";
 
 export function SiteFooter() {
   return (
@@ -28,6 +29,9 @@ export function SiteFooter() {
             Contacto
           </Link>
         </nav>
+      </div>
+      <div className="mx-auto max-w-5xl px-6 pb-8 text-center text-xs text-muted sm:text-left">
+        IconStack é uma marca de {LEGAL_ENTITY.name} ({LEGAL_ENTITY.country}).
       </div>
     </footer>
   );
