@@ -66,7 +66,7 @@ export const iconPacks: Product[] = [
     id: "icons-essencial",
     name: "Pacote Essencial",
     description: "20 ícones vetoriais essenciais para começar qualquer projeto.",
-    price: "€9",
+    price: "$9",
     features: ["20 ícones SVG", "Estilo outline", "Licença uso comercial"],
     type: "one_time",
     priceIdEnvVar: "PADDLE_PRICE_ICONS_ESSENCIAL",
@@ -77,7 +77,7 @@ export const iconPacks: Product[] = [
     id: "icons-pro",
     name: "Pacote Pro",
     description: "62 ícones vetoriais, prontos para produção.",
-    price: "€24",
+    price: "$24",
     features: [
       "62 ícones SVG",
       "Estilo outline consistente",
@@ -93,7 +93,7 @@ export const iconPacks: Product[] = [
     id: "icons-completo",
     name: "Pacote Completo",
     description: "Todo o catálogo de ícones, incluindo lançamentos futuros.",
-    price: "€49",
+    price: "$49",
     features: [
       "62 ícones SVG (todo o catálogo atual)",
       "Estilo outline consistente",

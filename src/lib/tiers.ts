@@ -15,8 +15,8 @@ export const tiers: Tier[] = [
     description: "Para quem está a começar.",
     features: ["1 projeto", "Suporte por email", "Atualizações da comunidade"],
     priceId: {
-      month: "pri_01m1cfa23cy1z7rhhzwyjhy052", // €15.00/mês
-      year: "pri_01m1cfa2ce5cymvj59nr4h301n", // €150.00/ano
+      month: "pri_01m1cg1pahm87hfkqch9ry02qy", // $15.00/mês
+      year: "pri_01m1cg1ppn88hnwvqtc9g8rypr", // $150.00/ano
     },
   },
   {
@@ -29,8 +29,8 @@ export const tiers: Tier[] = [
       "Acesso antecipado a novidades",
     ],
     priceId: {
-      month: "pri_01m1cfa3py086h6wd0svvdnk35", // €39.00/mês
-      year: "pri_01m1cfa4015maqrw90npp85cxs", // €390.00/ano
+      month: "pri_01m1cg1pzb1t8c05wwwek21y34", // $39.00/mês
+      year: "pri_01m1cg1q893mrhn51w43dxnzym", // $390.00/ano
     },
   },
   {
@@ -47,8 +47,8 @@ export const tiers: Tier[] = [
       "Gestor de conta dedicado",
     ],
     priceId: {
-      month: "pri_01m1cfa4kpvyet5ntebs0pqte2", // €99.00/mês
-      year: "pri_01m1cfa4wjvfzwpsmbwyy1k7j5", // €990.00/ano
+      month: "pri_01m1cg1qh8epg2ar6g3wa5ab3v", // $99.00/mês
+      year: "pri_01m1cg1qt5g17t1q71z3r571g2", // $990.00/ano
     },
   },
 ];
