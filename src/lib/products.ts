@@ -30,14 +30,14 @@ export function findIconPackByPriceId(priceId: string): Product | undefined {
 
 /** The exact icon names bundled in the Essencial pack (see scripts used to
  * build icon-packs/icons-essencial.zip) — Pro and Completo both include the
- * full ICON_NAMES catalog from src/lib/icons.ts. */
+ * full ICON_NAMES catalog from src/lib/icons.ts (Lucide, ISC license). */
 export const ESSENCIAL_ICON_NAMES = [
   "home",
   "search",
   "user",
   "mail",
   "check",
-  "close",
+  "x",
   "plus",
   "minus",
   "edit",
@@ -51,7 +51,12 @@ export const ESSENCIAL_ICON_NAMES = [
   "file",
   "settings",
   "bell",
-  "cart",
+  "shopping-cart",
+  "phone",
+  "map-pin",
+  "lock",
+  "image",
+  "share",
 ];
 
 /** Which of our icon packs include a given icon, for catalog detail views. */
@@ -65,9 +70,9 @@ export const iconPacks: Product[] = [
   {
     id: "icons-essencial",
     name: "Pacote Essencial",
-    description: "20 ícones vetoriais essenciais para começar qualquer projeto.",
+    description: `${ESSENCIAL_ICON_NAMES.length} ícones vetoriais essenciais para começar qualquer projeto.`,
     price: "$9",
-    features: ["20 ícones SVG", "Estilo outline", "Licença uso comercial"],
+    features: [`${ESSENCIAL_ICON_NAMES.length} ícones SVG`, "Estilo outline", "Licença uso comercial"],
     type: "one_time",
     priceIdEnvVar: "PADDLE_PRICE_ICONS_ESSENCIAL",
     previewIcons: ["home", "search", "heart", "star", "mail", "calendar", "folder", "settings"],
@@ -76,17 +81,17 @@ export const iconPacks: Product[] = [
   {
     id: "icons-pro",
     name: "Pacote Pro",
-    description: "62 ícones vetoriais, prontos para produção.",
+    description: `${ICON_NAMES.length} ícones vetoriais, prontos para produção.`,
     price: "$24",
     features: [
-      "62 ícones SVG",
+      `${ICON_NAMES.length} ícones SVG`,
       "Estilo outline consistente",
       "Licença uso comercial",
     ],
     type: "one_time",
     priceIdEnvVar: "PADDLE_PRICE_ICONS_PRO",
     highlighted: true,
-    previewIcons: ["home", "search", "cart", "credit-card", "chart", "camera", "music", "share"],
+    previewIcons: ["home", "search", "shopping-cart", "credit-card", "bar-chart", "camera", "music", "share"],
     totalIcons: ICON_NAMES.length,
   },
   {
@@ -95,14 +100,14 @@ export const iconPacks: Product[] = [
     description: "Todo o catálogo de ícones, incluindo lançamentos futuros.",
     price: "$49",
     features: [
-      "62 ícones SVG (todo o catálogo atual)",
+      `${ICON_NAMES.length} ícones SVG (todo o catálogo atual)`,
       "Estilo outline consistente",
       "Licença uso comercial",
       "Atualizações vitalícias incluídas",
     ],
     type: "one_time",
     priceIdEnvVar: "PADDLE_PRICE_ICONS_COMPLETO",
-    previewIcons: ["home", "search", "cart", "tag", "chart", "wifi", "video", "shield", "sun", "moon"],
+    previewIcons: ["home", "search", "shopping-cart", "tag", "bar-chart", "wifi", "video", "shield", "sun", "moon"],
     totalIcons: ICON_NAMES.length,
   },
 ];

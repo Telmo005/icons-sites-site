@@ -1,14 +1,12 @@
 import Link from "next/link";
+import { Logo } from "@/components/Logo";
 
 export function SiteHeader({ userEmail }: { userEmail?: string }) {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-2 text-lg font-semibold tracking-tight">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent text-sm font-bold text-accent-foreground">
-            I
-          </span>
-          IconStack
+        <Link href="/">
+          <Logo />
         </Link>
         <nav className="flex items-center gap-6 text-sm font-medium text-muted">
           <Link href="/icones" className="transition-colors hover:text-foreground">

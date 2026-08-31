@@ -1,16 +1,12 @@
 import Link from "next/link";
+import { Logo } from "@/components/Logo";
 import { LEGAL_ENTITY } from "@/lib/site-config";
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-border">
       <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-6 py-10 text-sm text-muted sm:flex-row">
-        <div className="flex items-center gap-2 font-medium text-foreground">
-          <span className="flex h-6 w-6 items-center justify-center rounded-md bg-accent text-xs font-bold text-accent-foreground">
-            I
-          </span>
-          IconStack
-        </div>
+        <Logo className="text-foreground" />
         <span>© {new Date().getFullYear()} IconStack. Todos os direitos reservados.</span>
         <nav className="flex flex-wrap items-center justify-center gap-4">
           <Link href="/pacotes" className="transition-colors hover:text-foreground">

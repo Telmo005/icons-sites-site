@@ -167,24 +167,23 @@ export function PricingClient({
       </div>
 
       {detected && (
-        <p className="mt-3 text-center text-xs text-muted">
-          Preços em {detected.currency}, para {countryName(detected.country)}.{" "}
-          <label className="cursor-pointer underline">
-            Mudar
-            <select
-              value={manualCountry ?? ""}
-              onChange={(e) => setManualCountry(e.target.value || null)}
-              className="sr-only"
-            >
-              <option value="">Detetar automaticamente</option>
-              {COUNTRY_OPTIONS.map((c) => (
-                <option key={c.code} value={c.code}>
-                  {c.label}
-                </option>
-              ))}
-            </select>
-          </label>
-        </p>
+        <div className="mt-3 flex items-center justify-center gap-2 text-xs text-muted">
+          <span>
+            Preços em {detected.currency}, para {countryName(detected.country)}.
+          </span>
+          <select
+            value={manualCountry ?? ""}
+            onChange={(e) => setManualCountry(e.target.value || null)}
+            className="rounded-md border border-border bg-surface px-2 py-1 text-xs text-foreground focus:border-accent focus:outline-none"
+          >
+            <option value="">Detetar automaticamente</option>
+            {COUNTRY_OPTIONS.map((c) => (
+              <option key={c.code} value={c.code}>
+                {c.label}
+              </option>
+            ))}
+          </select>
+        </div>
       )}
 
       <div className="mt-10 grid gap-6 sm:grid-cols-3">
