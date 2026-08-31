@@ -9,6 +9,7 @@ export function CheckoutButton({
   label = "Comprar",
   className = "",
   customData,
+  successUrl,
 }: {
   priceId: string | undefined;
   label?: string;
@@ -16,6 +17,8 @@ export function CheckoutButton({
   /** Passed through to Paddle Checkout so the webhook can identify the
    * product without guessing from the price id alone. */
   customData?: Record<string, string>;
+  /** Relative path Paddle redirects to after a successful payment. */
+  successUrl?: string;
 }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -53,6 +56,9 @@ export function CheckoutButton({
       paddle.Checkout.open({
         items: [{ priceId, quantity: 1 }],
         ...(customData ? { customData } : {}),
+        ...(successUrl
+          ? { settings: { successUrl: `${window.location.origin}${successUrl}` } }
+          : {}),
       });
     } catch (err) {
       setError(

@@ -72,6 +72,7 @@ export function ProductCard({
           priceId={priceId}
           label={product.type === "subscription" ? "Subscrever" : "Comprar agora"}
           customData={product.type === "one_time" ? { packId: product.id } : undefined}
+          successUrl={product.type === "one_time" ? "/welcome?type=icons" : undefined}
           className={
             product.highlighted
               ? "w-full rounded-full bg-accent px-5 py-3 text-center text-sm font-semibold text-accent-foreground shadow-lg shadow-accent/25 transition-transform hover:scale-105"
