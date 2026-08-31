@@ -1,3 +1,5 @@
+import { ICON_NAMES } from "@/lib/icons";
+
 export type Product = {
   id: string;
   name: string;
@@ -11,6 +13,8 @@ export type Product = {
   highlighted?: boolean;
   /** Names from src/lib/icons.ts shown as a preview grid on the product card. */
   previewIcons: string[];
+  /** Total icons actually included in the pack (previewIcons is just a sample of this). */
+  totalIcons: number;
 };
 
 /** Resolves a product's real Paddle Price ID from its env var, at server-render time. */
@@ -67,6 +71,7 @@ export const iconPacks: Product[] = [
     type: "one_time",
     priceIdEnvVar: "PADDLE_PRICE_ICONS_ESSENCIAL",
     previewIcons: ["home", "search", "heart", "star", "mail", "calendar", "folder", "settings"],
+    totalIcons: ESSENCIAL_ICON_NAMES.length,
   },
   {
     id: "icons-pro",
@@ -82,6 +87,7 @@ export const iconPacks: Product[] = [
     priceIdEnvVar: "PADDLE_PRICE_ICONS_PRO",
     highlighted: true,
     previewIcons: ["home", "search", "cart", "credit-card", "chart", "camera", "music", "share"],
+    totalIcons: ICON_NAMES.length,
   },
   {
     id: "icons-completo",
@@ -97,5 +103,6 @@ export const iconPacks: Product[] = [
     type: "one_time",
     priceIdEnvVar: "PADDLE_PRICE_ICONS_COMPLETO",
     previewIcons: ["home", "search", "cart", "tag", "chart", "wifi", "video", "shield", "sun", "moon"],
+    totalIcons: ICON_NAMES.length,
   },
 ];

@@ -38,13 +38,25 @@ export function IconsCatalog({
   return (
     <div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <input
-          type="search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Pesquisar (ex: coração, casa, seta…)"
-          className="w-full rounded-lg border border-border bg-surface px-4 py-3 text-sm focus:border-accent focus:outline-none sm:max-w-sm"
-        />
+        <div className="relative w-full sm:max-w-sm">
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Pesquisar (ex: coração, casa, seta…)"
+            className="w-full rounded-lg border border-border bg-surface px-4 py-3 pr-9 text-sm focus:border-accent focus:outline-none"
+          />
+          {query && (
+            <button
+              type="button"
+              onClick={() => setQuery("")}
+              aria-label="Limpar pesquisa"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-foreground"
+            >
+              ×
+            </button>
+          )}
+        </div>
         <div className="flex flex-wrap gap-2">
           {CATEGORY_NAMES.map((c) => (
             <button

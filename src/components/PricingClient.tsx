@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Tier } from "@/lib/tiers";
-import { getPaddle } from "@/lib/paddle-client";
+import { getPaddle, onPaddleEvent } from "@/lib/paddle-client";
 
 type BillingInterval = "month" | "year";
 
@@ -101,6 +101,21 @@ export function PricingClient({
       if (!paddle) {
         throw new Error("Não foi possível abrir o pagamento. Tente novamente ou contacte-nos.");
       }
+
+      // Checkout.open() never rejects — Paddle only reports a failed
+      // checkout (e.g. an unapproved domain) through this event stream.
+      const unsubscribe = onPaddleEvent((event) => {
+        if (event.name === "checkout.error" || event.name === "checkout.payment.error") {
+          setError(
+            (event as { detail?: string }).detail ??
+              "O Paddle recusou abrir o pagamento. Tente novamente ou contacte-nos."
+          );
+          unsubscribe();
+        } else if (event.name === "checkout.closed") {
+          unsubscribe();
+        }
+      });
+
       paddle.Checkout.open({
         items: [{ priceId: tier.priceId[interval], quantity: 1 }],
         ...(customerEmail ? { customer: { email: customerEmail } } : {}),

@@ -1,6 +1,19 @@
-import { initializePaddle, type Environments, type Paddle } from "@paddle/paddle-js";
+import { initializePaddle, type Environments, type Paddle, type PaddleEventData } from "@paddle/paddle-js";
 
 let initPromise: Promise<Paddle | undefined> | undefined;
+
+// Paddle.js only reports checkout failures (e.g. a domain that isn't
+// approved yet) through this global event callback, never through the
+// Checkout.open() call itself — it returns void and never rejects. Any
+// component with a pending checkout can subscribe here to find out.
+const eventListeners = new Set<(event: PaddleEventData) => void>();
+
+export function onPaddleEvent(listener: (event: PaddleEventData) => void): () => void {
+  eventListeners.add(listener);
+  return () => {
+    eventListeners.delete(listener);
+  };
+}
 
 function requireEnv(name: "NEXT_PUBLIC_PADDLE_ENV" | "NEXT_PUBLIC_PADDLE_CLIENT_TOKEN"): string {
   // Static references (not process.env[name]) so Next.js can inline these at build time.
@@ -53,6 +66,9 @@ export function getPaddle(): Promise<Paddle | undefined> {
       initializePaddle({
         token: requireEnv("NEXT_PUBLIC_PADDLE_CLIENT_TOKEN"),
         environment: requireEnvironment(),
+        eventCallback: (event) => {
+          for (const listener of eventListeners) listener(event);
+        },
       }),
       10000,
       "O Paddle demorou demasiado tempo a responder. Verifique a sua ligação (ou um bloqueador de anúncios) e tente novamente."

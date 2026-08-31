@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Product } from "@/lib/products";
 import { CheckoutButton } from "@/components/CheckoutButton";
 import { Icon } from "@/components/Icon";
@@ -9,6 +10,10 @@ export function ProductCard({
   product: Product;
   priceId: string | undefined;
 }) {
+  const hasMore = product.totalIcons > product.previewIcons.length;
+  const shownIcons = hasMore ? product.previewIcons.slice(0, -1) : product.previewIcons;
+  const remaining = product.totalIcons - shownIcons.length;
+
   return (
     <div
       className={`flex flex-col rounded-2xl border bg-surface p-6 shadow-sm transition-shadow hover:shadow-lg ${
@@ -24,16 +29,31 @@ export function ProductCard({
       <p className="mt-1 text-sm text-muted">{product.description}</p>
 
       {product.previewIcons.length > 0 && (
-        <div className="mt-4 grid grid-cols-5 gap-2 sm:grid-cols-4">
-          {product.previewIcons.map((iconName) => (
-            <div
-              key={iconName}
-              className="flex aspect-square items-center justify-center rounded-lg border border-border bg-background text-muted"
-            >
-              <Icon name={iconName} className="h-4 w-4" />
-            </div>
-          ))}
-        </div>
+        <>
+          <div className="mt-4 grid grid-cols-5 gap-2 sm:grid-cols-4">
+            {shownIcons.map((iconName) => (
+              <div
+                key={iconName}
+                className="flex aspect-square items-center justify-center rounded-lg border border-border bg-background text-muted"
+              >
+                <Icon name={iconName} className="h-4 w-4" />
+              </div>
+            ))}
+            {hasMore && (
+              <Link
+                href="/icones"
+                className="flex aspect-square items-center justify-center rounded-lg border border-border bg-background text-xs font-semibold text-accent transition-colors hover:bg-accent/10"
+              >
+                +{remaining}
+              </Link>
+            )}
+          </div>
+          {hasMore && (
+            <Link href="/icones" className="mt-2 inline-block text-xs text-accent underline">
+              Ver os {product.totalIcons} ícones
+            </Link>
+          )}
+        </>
       )}
 
       <p className="mt-4 text-3xl font-bold">{product.price}</p>
