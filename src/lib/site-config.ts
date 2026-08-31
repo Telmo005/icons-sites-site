@@ -1,5 +1,5 @@
 /** Public site-wide constants — not secrets, safe to import from client code. */
-export const SUPPORT_EMAIL = "telmo.sigauquejr@gmail.com";
+export const SUPPORT_EMAIL = "digitalhub.midia@gmail.com";
 
 /** Legal seller identity, shown on the legal pages and footer. Must match
  * exactly what's registered on the Paddle account (name and country), or
