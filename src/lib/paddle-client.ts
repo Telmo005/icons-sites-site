@@ -59,13 +59,21 @@ function withTimeout<T>(promise: Promise<T>, ms: number, message: string): Promi
 /** Lazily initializes a single shared Paddle.js instance for the whole app.
  * A failed attempt (e.g. the script blocked by an ad-blocker, or a network
  * timeout) does NOT get cached — the next call retries from scratch, instead
- * of every future checkout click permanently reusing the same rejection. */
-export function getPaddle(): Promise<Paddle | undefined> {
+ * of every future checkout click permanently reusing the same rejection.
+ *
+ * `paddleCustomerId` (the Paddle `ctm_...` id, never our own internal id or
+ * the user's email) enables Paddle Retain's cancellation-flow offers for a
+ * known existing customer — pass it whenever the signed-in user already has
+ * one. Only the first call in a page's lifetime takes effect, since the
+ * instance is a singleton; pass it as early as possible (e.g. from
+ * /account or /pricing when the customer is already known there). */
+export function getPaddle(paddleCustomerId?: string): Promise<Paddle | undefined> {
   if (!initPromise) {
     initPromise = withTimeout(
       initializePaddle({
         token: requireEnv("NEXT_PUBLIC_PADDLE_CLIENT_TOKEN"),
         environment: requireEnvironment(),
+        ...(paddleCustomerId ? { pwCustomer: { id: paddleCustomerId } } : {}),
         eventCallback: (event) => {
           for (const listener of eventListeners) listener(event);
         },

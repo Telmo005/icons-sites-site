@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import { tiers } from "@/lib/tiers";
-import { getSignedInUserEmail } from "@/lib/auth";
+import { getSignedInUserEmail, getSignedInPaddleCustomerId } from "@/lib/auth";
 import { PricingClient } from "@/components/PricingClient";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -24,6 +24,7 @@ export default async function PricingPage() {
   const headerList = await headers();
   const countryCode = readCountryCode(headerList.get("x-vercel-ip-country"));
   const customerEmail = await getSignedInUserEmail();
+  const paddleCustomerId = await getSignedInPaddleCustomerId();
 
   return (
     <div className="flex flex-1 flex-col font-sans">
@@ -43,6 +44,7 @@ export default async function PricingPage() {
             tiers={tiers}
             countryCode={countryCode}
             customerEmail={customerEmail}
+            paddleCustomerId={paddleCustomerId}
           />
         </div>
       </main>

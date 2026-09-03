@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { EventName } from "@paddle/paddle-node-sdk";
 import { getPaddleServer, getPaddleWebhookSecret } from "@/lib/paddle-server";
+import { isFromPaddleIp } from "@/lib/paddle-ips";
 import { linkCustomerToAuthUserByEmail, upsertCustomer } from "@/lib/db/customers";
 import { upsertSubscription } from "@/lib/db/subscriptions";
 import { upsertOrder } from "@/lib/db/orders";
@@ -11,6 +12,14 @@ import { sendIconPackPurchaseEmail } from "@/lib/email/resend";
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
+  // Defense in depth on top of the signature check below — Paddle only ever
+  // sends webhooks from its own published IPs (fetched live, never hardcoded,
+  // since Paddle says the list can change).
+  if (!(await isFromPaddleIp(request))) {
+    console.error("Webhook Paddle rejeitado: IP de origem não reconhecido.");
+    return NextResponse.json({ error: "forbidden" }, { status: 403 });
+  }
+
   const signature = request.headers.get("paddle-signature");
   // Paddle's signature covers the exact raw bytes it sent — never JSON.parse
   // before verifying, that changes the bytes and always fails the check.

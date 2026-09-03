@@ -33,10 +33,14 @@ export function PricingClient({
   tiers,
   countryCode,
   customerEmail,
+  paddleCustomerId,
 }: {
   tiers: Tier[];
   countryCode?: string;
   customerEmail?: string;
+  /** Paddle ctm_... id, if the signed-in user already has one — identifies
+   * them to Paddle Retain. Omit entirely for a first-time buyer. */
+  paddleCustomerId?: string;
 }) {
   const [interval, setBillingInterval] = useState<BillingInterval>("month");
   const [totals, setTotals] = useState<Record<string, string>>({});
@@ -55,7 +59,7 @@ export function PricingClient({
       setLoadingPrices(true);
       setError(null);
       try {
-        const paddle = await getPaddle();
+        const paddle = await getPaddle(paddleCustomerId);
         if (!paddle || cancelled) return;
 
         const response = await paddle.PricePreview({
@@ -91,13 +95,13 @@ export function PricingClient({
     return () => {
       cancelled = true;
     };
-  }, [interval, tiers, effectiveCountry]);
+  }, [interval, tiers, effectiveCountry, paddleCustomerId]);
 
   async function handleSubscribe(tier: Tier) {
     setPendingTier(tier.name);
     setError(null);
     try {
-      const paddle = await getPaddle();
+      const paddle = await getPaddle(paddleCustomerId);
       if (!paddle) {
         throw new Error("Não foi possível abrir o pagamento. Tente novamente ou contacte-nos.");
       }
